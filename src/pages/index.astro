@@ -1,0 +1,218 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { site } from "../config/site";
+import { featuredProjects } from "../config/projects";
+import { about } from "../config/about";
+---
+
+<BaseLayout>
+  <!-- ═══════════════════════════════════════════════════════════════════
+       HERO
+       ═══════════════════════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <div class="eyebrow reveal d1">Computer Engineer · BU '26</div>
+        <h1 class="reveal d2">
+          <span class="hero-name">{site.name}</span>
+          <span class="hero-verb">builds systems that</span>
+          <span class="hero-emphasis">bridge hardware and the cloud.</span>
+        </h1>
+        <p class="hero-blurb reveal d3">{site.blurb}</p>
+        <div class="hero-actions reveal d4">
+          <a href="/projects" class="btn btn-primary">View Projects</a>
+          <a href="/about" class="btn">About Me</a>
+        </div>
+      </div>
+      <div class="hero-portrait reveal d3" aria-hidden="true">
+        <img src={about.photo} alt="" onerror="this.style.opacity=0" />
+        <div class="portrait-frame"></div>
+      </div>
+    </div>
+    <!-- Decorative horizon line -->
+    <div class="horizon" aria-hidden="true"></div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       FEATURED PROJECTS
+       ═══════════════════════════════════════════════════════════════════ -->
+  <section class="projects-section">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Selected Work</div>
+          <h2>Featured projects</h2>
+        </div>
+        <a href="/projects" class="all-link">All projects →</a>
+      </div>
+      <hr class="rule" />
+
+      <div class="project-grid">
+        {featuredProjects.map((p) => <ProjectCard project={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════
+       INLINE CTA / CONTACT STRIP
+       ═══════════════════════════════════════════════════════════════════ -->
+  <section class="cta">
+    <div class="container cta-inner">
+      <div>
+        <div class="eyebrow">Next Step</div>
+        <h2>Graduating May 2026. Looking for C/C++ roles in Colorado.</h2>
+        <p class="muted">
+          Open to embedded, edge, distributed infrastructure, and anything close to the metal.
+        </p>
+      </div>
+      <div class="cta-actions">
+        <a href={`mailto:${site.email}`} class="btn btn-primary">{site.email}</a>
+        {site.socials.resume && (
+          <a href={site.socials.resume} class="btn" target="_blank" rel="noopener">Resume (PDF)</a>
+        )}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ---------- Hero ---------- */
+  .hero { position: relative; padding-top: 6rem; padding-bottom: 4rem; overflow: hidden; }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .hero-text { max-width: 640px; }
+  .hero h1 {
+    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+    line-height: 1.08;
+    margin-bottom: 1.5rem;
+  }
+  .hero-name {
+    display: block;
+    font-weight: 400;
+    color: var(--color-text);
+  }
+  .hero-verb {
+    display: block;
+    color: var(--color-text-muted);
+    font-style: italic;
+    font-weight: 300;
+  }
+  .hero-emphasis {
+    display: block;
+    color: var(--color-forest-bright);
+    font-weight: 400;
+  }
+  .hero-blurb {
+    font-size: 1.05rem;
+    color: var(--color-text-muted);
+    max-width: 56ch;
+    margin-bottom: 2rem;
+  }
+  .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+  /* Portrait */
+  .hero-portrait {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    max-width: 360px;
+    justify-self: end;
+    width: 100%;
+  }
+  .hero-portrait img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.85) contrast(1.05);
+    transition: opacity 0.4s var(--ease);
+  }
+  .portrait-frame {
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--color-border-bright);
+    pointer-events: none;
+    background:
+      /* Soft ocean tint over empty-image state */
+      linear-gradient(135deg,
+        color-mix(in oklab, var(--color-ocean) 40%, transparent),
+        color-mix(in oklab, var(--color-forest) 25%, transparent));
+    mix-blend-mode: multiply;
+  }
+  /* Decorative offset frame */
+  .hero-portrait::before {
+    content: "";
+    position: absolute;
+    inset: 12px -12px -12px 12px;
+    border: 1px solid var(--color-forest);
+    z-index: -1;
+    opacity: 0.6;
+  }
+
+  .horizon {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1px;
+    background: linear-gradient(
+      to right,
+      transparent,
+      var(--color-border-bright) 30%,
+      var(--color-border-bright) 70%,
+      transparent
+    );
+  }
+
+  @media (max-width: 860px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .hero-portrait { justify-self: start; max-width: 280px; }
+  }
+
+  /* ---------- Section heads ---------- */
+  .section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .all-link {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-forest-bright);
+    padding-bottom: 0.4rem;
+  }
+  .all-link:hover { color: var(--color-text); }
+
+  /* ---------- Project grid ---------- */
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* ---------- CTA ---------- */
+  .cta {
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+    background: color-mix(in oklab, var(--color-bg-subtle) 70%, transparent);
+    margin-top: 3rem;
+  }
+  .cta-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+  .cta h2 { font-size: clamp(1.4rem, 2.4vw, 1.9rem); max-width: 40ch; }
+  .cta-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+</style>

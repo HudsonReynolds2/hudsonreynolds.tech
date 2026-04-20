@@ -1,0 +1,236 @@
+/* ============================================================================
+   GLOBAL STYLES — Hudson Reynolds portfolio
+   ----------------------------------------------------------------------------
+   Color tokens are *injected* into :root from src/config/site.ts at build time
+   (see BaseLayout.astro). The values here are defaults / fallbacks so the CSS
+   still renders standalone.
+
+   Typography: pairs a distinctive serif display (Fraunces) with a clean
+   geometric sans (Space Grotesk's less-overused cousin, "Hanken Grotesk")
+   and a mono (JetBrains Mono). Feel free to swap in BaseLayout.
+   ============================================================================ */
+
+:root {
+  /* Fallback palette — overridden at runtime */
+  --color-bg: #0a1f2e;
+  --color-bg-elevated: #10293a;
+  --color-bg-subtle: #0d2332;
+  --color-text: #e8f0e4;
+  --color-text-muted: #9bb1ae;
+  --color-text-faint: #5a7470;
+  --color-ocean: #2d7fa3;
+  --color-ocean-deep: #1a5578;
+  --color-forest: #4a8c5a;
+  --color-forest-bright: #6bb37e;
+  --color-sand: #d4b483;
+  --color-border: #1e3a4a;
+  --color-border-bright: #2d5268;
+
+  /* Typography */
+  --font-display: "Fraunces", "Cormorant Garamond", Georgia, serif;
+  --font-body: "Hanken Grotesk", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", ui-monospace, monospace;
+
+  /* Spacing / layout */
+  --max-width: 1200px;
+  --max-width-narrow: 760px;
+  --radius: 4px;
+  --radius-lg: 8px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+img, svg, video { display: block; max-width: 100%; height: auto; }
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+
+/* ---------- Body ---------- */
+html {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  /* Atmospheric gradient — ocean fading up into the "atmosphere" */
+  background:
+    radial-gradient(ellipse 1200px 800px at 50% -10%,
+      color-mix(in oklab, var(--color-ocean) 20%, transparent) 0%,
+      transparent 60%),
+    radial-gradient(ellipse 900px 600px at 90% 110%,
+      color-mix(in oklab, var(--color-forest) 15%, transparent) 0%,
+      transparent 60%),
+    var(--color-bg);
+  background-attachment: fixed;
+}
+
+/* ---------- Typography ---------- */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  margin: 0;
+}
+h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 300; }
+h2 { font-size: clamp(1.6rem, 3vw, 2.4rem); }
+h3 { font-size: 1.3rem; }
+
+p { margin: 0 0 1em; }
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-forest-bright);
+  margin-bottom: 0.75rem;
+}
+
+.mono { font-family: var(--font-mono); }
+
+a.link {
+  color: var(--color-forest-bright);
+  border-bottom: 1px solid color-mix(in oklab, var(--color-forest-bright) 35%, transparent);
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+a.link:hover {
+  color: var(--color-text);
+  border-bottom-color: var(--color-text);
+}
+
+/* ---------- Layout ---------- */
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.container-narrow {
+  width: 100%;
+  max-width: var(--max-width-narrow);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+section { padding: 5rem 0; }
+@media (max-width: 640px) { section { padding: 3rem 0; } }
+
+/* Subtle horizontal rule used under section headings */
+.rule {
+  border: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    var(--color-border-bright),
+    transparent 70%
+  );
+  margin: 0.75rem 0 2.5rem;
+}
+
+/* ---------- Utilities ---------- */
+.muted { color: var(--color-text-muted); }
+.faint { color: var(--color-text-faint); }
+.center { text-align: center; }
+
+/* ---------- Tag pills ---------- */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.tag {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  background: color-mix(in oklab, var(--color-ocean) 15%, transparent);
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  transition: all 0.2s var(--ease);
+}
+.tag:hover {
+  color: var(--color-text);
+  border-color: var(--color-border-bright);
+  background: color-mix(in oklab, var(--color-ocean) 25%, transparent);
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  border: 1px solid var(--color-border-bright);
+  background: transparent;
+  transition: all 0.2s var(--ease);
+}
+.btn:hover {
+  background: color-mix(in oklab, var(--color-ocean) 30%, transparent);
+  border-color: var(--color-forest-bright);
+  color: var(--color-text);
+}
+.btn-primary {
+  border-color: var(--color-forest);
+  background: color-mix(in oklab, var(--color-forest) 25%, transparent);
+}
+.btn-primary:hover {
+  background: color-mix(in oklab, var(--color-forest) 45%, transparent);
+  border-color: var(--color-forest-bright);
+}
+
+/* ---------- Entry animations ---------- */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal {
+  opacity: 0;
+  animation: fadeUp 0.7s var(--ease) forwards;
+}
+.reveal.d1 { animation-delay: 0.05s; }
+.reveal.d2 { animation-delay: 0.15s; }
+.reveal.d3 { animation-delay: 0.25s; }
+.reveal.d4 { animation-delay: 0.35s; }
+.reveal.d5 { animation-delay: 0.45s; }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal { opacity: 1; }
+}
+
+/* ---------- Grain texture overlay (subtle atmospheric noise) ---------- */
+.grain {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}

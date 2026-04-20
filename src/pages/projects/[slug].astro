@@ -1,0 +1,234 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { projects } from "../../config/projects";
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+
+// Render a section body with paragraph breaks preserved.
+function paragraphs(text: string): string[] {
+  return text.split(/\n\s*\n/).filter(Boolean);
+}
+---
+
+<BaseLayout title={project.title} description={project.summary}>
+  <article class="project">
+    <!-- ═════════════════════════════════════════════════════════════════
+         HERO IMAGE
+         ═════════════════════════════════════════════════════════════════ -->
+    <div class="project-hero-image" aria-hidden="true">
+      <img src={project.image} alt={project.title} onerror="this.style.opacity=0" />
+      <div class="project-hero-overlay"></div>
+    </div>
+
+    <!-- ═════════════════════════════════════════════════════════════════
+         TITLE BLOCK
+         ═════════════════════════════════════════════════════════════════ -->
+    <header class="project-head">
+      <div class="container-narrow">
+        <a href="/projects" class="back">← All projects</a>
+        {project.year && <div class="eyebrow">{project.year}{project.role ? ` · ${project.role}` : ""}</div>}
+        <h1>{project.title}</h1>
+        {project.subtitle && <p class="project-sub">{project.subtitle}</p>}
+        <p class="project-summary">{project.summary}</p>
+
+        <ul class="tags project-tags">
+          {project.tags.map((t) => <li class="tag">{t}</li>)}
+        </ul>
+
+        {project.links && project.links.length > 0 && (
+          <div class="project-links">
+            {project.links.map((link) => (
+              <a href={link.href} target="_blank" rel="noopener" class="btn">
+                {link.label} ↗
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </header>
+
+    <!-- ═════════════════════════════════════════════════════════════════
+         LONG-FORM SECTIONS
+         ═════════════════════════════════════════════════════════════════ -->
+    {project.sections && project.sections.length > 0 ? (
+      <div class="project-body">
+        <div class="container-narrow">
+          {project.sections.map((section) => (
+            <section class="project-section">
+              <h2>{section.heading}</h2>
+              {paragraphs(section.body).map((p) => <p>{p}</p>)}
+            </section>
+          ))}
+        </div>
+      </div>
+    ) : (
+      <div class="project-body">
+        <div class="container-narrow">
+          <section class="project-section">
+            <p class="muted">
+              A full writeup for this project is coming soon. For now, see the
+              links above for source code and details.
+            </p>
+          </section>
+        </div>
+      </div>
+    )}
+
+    <!-- ═════════════════════════════════════════════════════════════════
+         GALLERY
+         ═════════════════════════════════════════════════════════════════ -->
+    {project.gallery && project.gallery.length > 0 && (
+      <section class="project-gallery">
+        <div class="container">
+          <div class="eyebrow">Gallery</div>
+          <h2>Images</h2>
+          <hr class="rule" />
+          <div class="gallery-grid">
+            {project.gallery.map((img) => (
+              <div class="gallery-item">
+                <img src={img} alt="" loading="lazy" onerror="this.closest('.gallery-item').style.display='none'" />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- ═════════════════════════════════════════════════════════════════
+         NEXT STEPS
+         ═════════════════════════════════════════════════════════════════ -->
+    <section class="project-footer">
+      <div class="container-narrow center">
+        <a href="/projects" class="btn">← All projects</a>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  /* Hero image */
+  .project-hero-image {
+    position: relative;
+    width: 100%;
+    height: clamp(260px, 45vh, 500px);
+    overflow: hidden;
+    background:
+      linear-gradient(135deg,
+        color-mix(in oklab, var(--color-ocean-deep) 85%, transparent) 0%,
+        color-mix(in oklab, var(--color-forest) 45%, transparent) 100%
+      );
+    border-bottom: 1px solid var(--color-border);
+  }
+  .project-hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.9);
+  }
+  .project-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      transparent 50%,
+      color-mix(in oklab, var(--color-bg) 85%, transparent) 100%
+    );
+  }
+
+  /* Title */
+  .project-head {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  .back {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--color-forest-bright);
+    margin-bottom: 2rem;
+    display: inline-block;
+  }
+  .back:hover { color: var(--color-text); }
+  .project-head h1 {
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    margin: 0.5rem 0;
+  }
+  .project-sub {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.4rem;
+    color: var(--color-text-muted);
+    margin: 0 0 1.5rem;
+  }
+  .project-summary {
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--color-text);
+    max-width: 60ch;
+    margin-bottom: 1.5rem;
+  }
+  .project-tags { margin-bottom: 2rem; }
+  .project-links {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  /* Body */
+  .project-body {
+    border-top: 1px solid var(--color-border);
+    padding: 4rem 0 2rem;
+    background: color-mix(in oklab, var(--color-bg-subtle) 40%, transparent);
+  }
+  .project-section {
+    margin-bottom: 3rem;
+  }
+  .project-section h2 {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: var(--color-forest-bright);
+  }
+  .project-section p {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--color-text);
+    margin-bottom: 1.2rem;
+    white-space: pre-line;
+  }
+
+  /* Gallery */
+  .project-gallery { padding-top: 3rem; }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+  .gallery-item {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-elevated);
+  }
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s var(--ease);
+  }
+  .gallery-item:hover img { transform: scale(1.05); }
+
+  .project-footer {
+    padding-top: 3rem;
+    padding-bottom: 1rem;
+  }
+</style>

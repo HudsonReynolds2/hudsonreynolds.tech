@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hudsonreynolds.tech/sitemap-index.xml

@@ -1,0 +1,99 @@
+---
+import type { Project } from "../config/projects";
+
+type Props = { project: Project };
+const { project } = Astro.props;
+---
+
+<a class="card" href={`/projects/${project.slug}`}>
+  <div class="card-image">
+    <img src={project.image} alt={project.title} loading="lazy" />
+    <div class="card-image-overlay"></div>
+  </div>
+  <div class="card-body">
+    {project.year && <div class="card-year mono">{project.year}</div>}
+    <h3 class="card-title">{project.title}</h3>
+    {project.subtitle && <div class="card-subtitle">{project.subtitle}</div>}
+    <p class="card-summary muted">{project.summary}</p>
+    <ul class="tags card-tags">
+      {project.tags.slice(0, 5).map((tag) => <li class="tag">{tag}</li>)}
+      {project.tags.length > 5 && <li class="tag faint">+{project.tags.length - 5}</li>}
+    </ul>
+  </div>
+</a>
+
+<style>
+  .card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--color-border);
+    background: var(--color-bg-elevated);
+    transition: transform 0.35s var(--ease), border-color 0.35s var(--ease);
+    overflow: hidden;
+    height: 100%;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: var(--color-forest);
+  }
+  .card-image {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background:
+      linear-gradient(135deg,
+        color-mix(in oklab, var(--color-ocean-deep) 80%, transparent) 0%,
+        color-mix(in oklab, var(--color-forest) 40%, transparent) 100%
+      );
+  }
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s var(--ease);
+  }
+  .card:hover .card-image img { transform: scale(1.04); }
+  .card-image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      color-mix(in oklab, var(--color-bg) 60%, transparent) 0%,
+      transparent 50%
+    );
+  }
+  /* Fallback styling if the image is missing — show a gradient */
+  .card-image img[src=""], .card-image img:not([src]) { opacity: 0; }
+
+  .card-body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+  }
+  .card-year {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--color-forest-bright);
+    text-transform: uppercase;
+  }
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: var(--color-text);
+  }
+  .card-subtitle {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin-top: -0.2rem;
+  }
+  .card-summary {
+    font-size: 0.95rem;
+    margin: 0.2rem 0 0.8rem;
+    line-height: 1.55;
+  }
+  .card-tags { margin-top: auto; }
+</style>

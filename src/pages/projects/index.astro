@@ -1,0 +1,63 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { featuredProjects, otherProjects } from "../../config/projects";
+---
+
+<BaseLayout
+  title="Projects"
+  description="A collection of embedded systems, distributed systems, and research projects."
+>
+  <section class="projects-hero">
+    <div class="container">
+      <div class="eyebrow">Portfolio</div>
+      <h1>Projects</h1>
+      <p class="lede muted">
+        A mix of capstone work, research contributions, coursework that went
+        beyond the brief, and the kind of weekend tinkering that ends up being
+        load-bearing in a capstone later.
+      </p>
+    </div>
+  </section>
+
+  {featuredProjects.length > 0 && (
+    <section class="featured-section">
+      <div class="container">
+        <div class="eyebrow">Featured</div>
+        <h2>Selected work</h2>
+        <hr class="rule" />
+        <div class="project-grid">
+          {featuredProjects.map((p) => <ProjectCard project={p} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {otherProjects.length > 0 && (
+    <section>
+      <div class="container">
+        <div class="eyebrow">Also</div>
+        <h2>Other projects</h2>
+        <hr class="rule" />
+        <div class="project-grid">
+          {otherProjects.map((p) => <ProjectCard project={p} />)}
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>
+
+<style>
+  .projects-hero { padding-top: 5rem; padding-bottom: 3rem; }
+  .lede {
+    font-size: 1.1rem;
+    max-width: 60ch;
+    margin-top: 1rem;
+  }
+  .featured-section { padding-top: 2rem; }
+  .project-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 1.5rem;
+  }
+</style>
