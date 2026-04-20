@@ -1,0 +1,22 @@
+#:schema node_modules/wrangler/config-schema.json
+
+# ============================================================================
+# Wrangler config — Cloudflare Workers deployment
+# ----------------------------------------------------------------------------
+# This site is a fully static Astro build. There is no server code, so there
+# is no `main` field — we only serve the files in ./dist via the Workers
+# static-assets runtime. Wrangler picks this file up automatically when you
+# (or Cloudflare's Workers Builds CI) run `npx wrangler deploy`.
+#
+# When you first create the project in Cloudflare, change `name` to whatever
+# you want the *.workers.dev subdomain to be. Custom domains (hudsonreynolds
+# .tech / .org) are attached separately through the dashboard.
+# ============================================================================
+
+name = "hudsonreynolds"
+compatibility_date = "2025-04-01"
+
+[assets]
+directory = "./dist"
+# Serves pretty URLs without trailing slashes (e.g. /about instead of /about/)
+not_found_handling = "404-page"

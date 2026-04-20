@@ -3,14 +3,23 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import { site } from "../config/site";
 import { featuredProjects } from "../config/projects";
-import { about } from "../config/about";
 ---
 
 <BaseLayout>
   <!-- ═══════════════════════════════════════════════════════════════════
-       HERO
+       HERO — full-bleed atmospheric forest
        ═══════════════════════════════════════════════════════════════════ -->
   <section class="hero">
+    {site.heroImage.src && (
+      <div class="hero-bg" aria-hidden="true">
+        <picture>
+          <source media="(max-width: 720px)" srcset={site.heroImage.srcMobile} />
+          <img src={site.heroImage.src} alt="" style={`object-position: ${site.heroImage.position};`} />
+        </picture>
+        <div class="hero-bg-overlay" style={`--darken: ${site.heroImage.darken};`}></div>
+      </div>
+    )}
+
     <div class="container hero-inner">
       <div class="hero-text">
         <div class="eyebrow reveal d1">Computer Engineer · BU '26</div>
@@ -25,12 +34,11 @@ import { about } from "../config/about";
           <a href="/about" class="btn">About Me</a>
         </div>
       </div>
-      <div class="hero-portrait reveal d3" aria-hidden="true">
-        <img src={about.photo} alt="" onerror="this.style.opacity=0" />
-        <div class="portrait-frame"></div>
-      </div>
     </div>
-    <!-- Decorative horizon line -->
+
+    {site.heroImage.caption && (
+      <div class="hero-caption mono" aria-hidden="true">{site.heroImage.caption}</div>
+    )}
     <div class="horizon" aria-hidden="true"></div>
   </section>
 
@@ -77,19 +85,72 @@ import { about } from "../config/about";
 </BaseLayout>
 
 <style>
-  /* ---------- Hero ---------- */
-  .hero { position: relative; padding-top: 6rem; padding-bottom: 4rem; overflow: hidden; }
-  .hero-inner {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr;
-    gap: 4rem;
+  /* ---------- Hero: full-bleed atmospheric ---------- */
+  .hero {
+    position: relative;
+    min-height: clamp(520px, 85vh, 780px);
+    padding: 0;
+    display: flex;
     align-items: center;
+    overflow: hidden;
+    /* Pull the hero up through the header — header is translucent, so this
+       gives the background image a chance to peek through the nav. */
+    margin-top: calc(-1 * (1rem + 2.5rem));
+    padding-top: calc(1rem + 2.5rem);
   }
-  .hero-text { max-width: 640px; }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Subtle movement: scale + slow drift feels atmospheric, not cheesy. */
+    animation: heroDrift 40s ease-in-out infinite alternate;
+    filter: saturate(1.05) contrast(1.03);
+  }
+  .hero-bg-overlay {
+    position: absolute;
+    inset: 0;
+    /* Readability overlay — top is darker for nav contrast, bottom fades
+       into the page background for a clean hand-off. */
+    background:
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--color-bg) calc(var(--darken) * 100%), transparent) 0%,
+        color-mix(in oklab, var(--color-bg) calc(var(--darken) * 80%), transparent) 40%,
+        color-mix(in oklab, var(--color-bg) calc(var(--darken) * 110%), transparent) 85%,
+        var(--color-bg) 100%
+      ),
+      /* Subtle ocean tint layered over the forest to keep palette cohesion */
+      linear-gradient(
+        135deg,
+        color-mix(in oklab, var(--color-ocean-deep) 25%, transparent) 0%,
+        transparent 60%
+      );
+  }
+
+  @keyframes heroDrift {
+    from { transform: scale(1.04) translate3d(0, 0, 0); }
+    to   { transform: scale(1.08) translate3d(-1.5%, -1%, 0); }
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+  }
+  .hero-text { max-width: 720px; }
   .hero h1 {
-    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
-    line-height: 1.08;
+    font-size: clamp(2.6rem, 6vw, 4.6rem);
+    line-height: 1.05;
     margin-bottom: 1.5rem;
+    /* Drop shadow helps text stand off the photo */
+    text-shadow: 0 2px 24px color-mix(in oklab, var(--color-bg) 60%, transparent);
   }
   .hero-name {
     display: block;
@@ -98,7 +159,7 @@ import { about } from "../config/about";
   }
   .hero-verb {
     display: block;
-    color: var(--color-text-muted);
+    color: color-mix(in oklab, var(--color-text) 85%, transparent);
     font-style: italic;
     font-weight: 300;
   }
@@ -108,50 +169,39 @@ import { about } from "../config/about";
     font-weight: 400;
   }
   .hero-blurb {
-    font-size: 1.05rem;
-    color: var(--color-text-muted);
-    max-width: 56ch;
+    font-size: 1.1rem;
+    color: color-mix(in oklab, var(--color-text) 82%, transparent);
+    max-width: 58ch;
     margin-bottom: 2rem;
+    text-shadow: 0 1px 12px color-mix(in oklab, var(--color-bg) 70%, transparent);
   }
   .hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
 
-  /* Portrait */
-  .hero-portrait {
-    position: relative;
-    aspect-ratio: 3 / 4;
-    max-width: 360px;
-    justify-self: end;
-    width: 100%;
-  }
-  .hero-portrait img {
+  /* Small photo-credit in the corner, like a print photograph */
+  .hero-caption {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: saturate(0.85) contrast(1.05);
-    transition: opacity 0.4s var(--ease);
+    right: 1.5rem;
+    bottom: 1.25rem;
+    z-index: 2;
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: color-mix(in oklab, var(--color-text) 55%, transparent);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    padding-right: 0.25rem;
+    border-right: 1px solid color-mix(in oklab, var(--color-text) 25%, transparent);
   }
-  .portrait-frame {
-    position: absolute;
-    inset: 0;
-    border: 1px solid var(--color-border-bright);
-    pointer-events: none;
-    background:
-      /* Soft ocean tint over empty-image state */
-      linear-gradient(135deg,
-        color-mix(in oklab, var(--color-ocean) 40%, transparent),
-        color-mix(in oklab, var(--color-forest) 25%, transparent));
-    mix-blend-mode: multiply;
-  }
-  /* Decorative offset frame */
-  .hero-portrait::before {
-    content: "";
-    position: absolute;
-    inset: 12px -12px -12px 12px;
-    border: 1px solid var(--color-forest);
-    z-index: -1;
-    opacity: 0.6;
+  @media (max-width: 720px) {
+    .hero-caption {
+      writing-mode: horizontal-tb;
+      transform: none;
+      border-right: none;
+      border-top: 1px solid color-mix(in oklab, var(--color-text) 25%, transparent);
+      padding: 0.25rem 0 0;
+      right: 1.5rem;
+      bottom: 1rem;
+    }
   }
 
   .horizon {
@@ -160,6 +210,7 @@ import { about } from "../config/about";
     right: 0;
     bottom: 0;
     height: 1px;
+    z-index: 3;
     background: linear-gradient(
       to right,
       transparent,
@@ -169,9 +220,8 @@ import { about } from "../config/about";
     );
   }
 
-  @media (max-width: 860px) {
-    .hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-    .hero-portrait { justify-self: start; max-width: 280px; }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-bg img { animation: none; transform: scale(1.02); }
   }
 
   /* ---------- Section heads ---------- */

@@ -28,6 +28,7 @@ Everything you'll normally touch lives in **`src/config/`**. You should not need
 - Email, location
 - Social links (leave any as `""` to hide the icon)
 - Nav bar items
+- **`heroImage`** — the big atmospheric photo on the homepage. Swap `src` / `srcMobile` to change it. `position` controls framing (`"center 55%"` means horizontally centered, slightly below center vertically). `darken` is 0–1 — push higher for brighter photos where text needs more contrast, lower for already-dark photos. Set `heroImage.src` to `""` to disable the photo and fall back to a pure gradient.
 - **Theme colors** — the whole earth palette lives here. Tweak one hex value and the entire site re-themes.
 
 ### `src/config/projects.ts`
@@ -117,7 +118,9 @@ Images fail gracefully — missing files show a blue/green gradient instead of a
 
 ---
 
-## Deploying to Cloudflare Pages
+## Deploying to Cloudflare Workers
+
+Cloudflare has unified Pages into Workers — new projects should use **Workers Builds**, which serves static sites from the Workers runtime with the same edge network, free tier, and custom-domain handling that Pages had. The repo ships with a `wrangler.toml` that tells Wrangler where to find the built assets, so there's nothing to configure in the file itself.
 
 ### One-time setup
 
@@ -132,21 +135,31 @@ Images fail gracefully — missing files show a blue/green gradient instead of a
    git push -u origin main
    ```
 
-2. **Create the Cloudflare Pages project.**
+2. **Create the Workers project from Git.**
    - Log in at [dash.cloudflare.com](https://dash.cloudflare.com).
-   - Go to **Workers & Pages → Create → Pages → Connect to Git**.
+   - Go to **Workers & Pages → Create → Import a repository**.
    - Select your GitHub repo.
-   - Build settings:
-     - **Framework preset:** Astro
-     - **Build command:** `npm run build`
-     - **Build output directory:** `dist`
-   - Save and deploy. Your site will be live at `<project-name>.pages.dev` in ~1 min.
+   - **Build settings — use exactly these values:**
+
+     | Field | Value |
+     |---|---|
+     | Build command | `npm run build` |
+     | Deploy command | `npx wrangler deploy` |
+     | Root directory | *(leave blank)* — **unless** your `package.json` lives in a subfolder of the repo, in which case put the subfolder name here (e.g. `hudson-portfolio`) |
+     | Build output directory | *(leave blank — set by `wrangler.toml`)* |
+
+   - **Common mistakes:**
+     - Do not put `/dist` as Root directory — that's the *output* folder, not the input.
+     - The leading `/` in Root directory also fails — Cloudflare treats it as an absolute path. Use no slash, or leave it blank.
+     - If you see `root directory not found`, blank the field out or point it at whichever folder contains `package.json`.
+
+   - Save and deploy. Your site will be live at `<project-name>.<your-subdomain>.workers.dev` within a minute.
 
 3. **Attach custom domains.**
-   - In the Pages project → **Custom domains → Set up a custom domain**.
+   - In the Workers project → **Settings → Domains & Routes → Add → Custom domain**.
    - Add `hudsonreynolds.tech`. Cloudflare will ask you to either:
      - Move the domain's nameservers to Cloudflare (easiest, free), or
-     - Add a CNAME at your current registrar pointing to `<project>.pages.dev`.
+     - Add a CNAME at your current registrar pointing to `<project>.<subdomain>.workers.dev`.
    - Repeat for `hudsonreynolds.org` and for `www.hudsonreynolds.tech` / `.org`.
    - Cloudflare issues SSL certs automatically.
 
@@ -155,7 +168,18 @@ Images fail gracefully — missing files show a blue/green gradient instead of a
    - *If hostname matches* `hudsonreynolds.org`
    - *Then 301 to* `https://hudsonreynolds.tech/${path}`
 
-### Every deploy after that
+### Deploying manually from your machine
+
+You don't need the CI/CD flow if you just want to push from your laptop. After any change:
+
+```bash
+npm run build
+npx wrangler deploy
+```
+
+The first time, Wrangler will open a browser window to authenticate against your Cloudflare account.
+
+### Every git-based deploy after that
 
 ```bash
 git add .

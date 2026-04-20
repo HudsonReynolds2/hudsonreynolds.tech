@@ -22,7 +22,7 @@ export const site = {
   // ── Social links (leave any empty "" to hide that icon) ────────────────────
   socials: {
     github: "https://github.com/HudsonReynolds2",
-    linkedin: "",        // add your LinkedIn URL here
+    linkedin: "www.linkedin.com/in/hudson-m-reynolds",        // add your LinkedIn URL here
     scholar: "",         // Google Scholar if you have one
     resume: "/resume.pdf", // drop your resume PDF at /public/resume.pdf
   },
