@@ -17,12 +17,12 @@ export const site = {
 
   // ── Contact ────────────────────────────────────────────────────────────────
   email: "hudsonre@bu.edu",
-  location: "Boston, MA → San Diego, CA",
+  location: "Boston, MA → San Diego",
 
   // ── Social links (leave any empty "" to hide that icon) ────────────────────
   socials: {
     github: "https://github.com/HudsonReynolds2",
-    linkedin: "www.linkedin.com/in/hudson-m-reynolds",        // add your LinkedIn URL here
+    linkedin: "",        // add your LinkedIn URL here
     scholar: "",         // Google Scholar if you have one
     resume: "/resume.pdf", // drop your resume PDF at /public/resume.pdf
   },
@@ -34,6 +34,23 @@ export const site = {
     { label: "Projects", href: "/projects" },
     { label: "Resume",   href: "/resume.pdf", external: true },
   ],
+
+  // ── Hero background image ──────────────────────────────────────────────────
+  // Used as an ambient background on the homepage hero. Served with a dark
+  // overlay gradient so text stays readable. Swap the paths to re-theme the site
+  // around any photo you want. Leave src as "" to fall back to pure gradient.
+  heroImage: {
+    src:       "/images/site/forest-hero-2400.jpg",
+    srcMobile: "/images/site/forest-hero-1200.jpg",
+    // Where the image's focal point sits — CSS object-position syntax.
+    // "center 55%" pulls the framing slightly down to keep the path visible.
+    position:  "center 55%",
+    // How strongly to darken the image so text is legible. 0 = photo only,
+    // 1 = pure overlay. 0.55 is a good starting point for dark photos.
+    darken:    0.55,
+    // Human-readable credit / alt, shown as a small attribution line.
+    caption:   "Tarkine Rainforest, Tasmania",
+  },
 
   // ── Theme: blue + green like the earth ─────────────────────────────────────
   // These become CSS variables. Tweak freely; the rest of the site updates.
