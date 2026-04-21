@@ -54,8 +54,8 @@ export const projects: Project[] = [
     title: "FrostByte",
     subtitle: "Multi-Sensor Black Ice Detection Platform",
     summary:
-      "A Raspberry Pi 5 platform that fuses RGB, thermal, mmWave radar, and " +
-      "temperature data to detect black ice before it's visible. Senior capstone, team lead.",
+      "A scalable ice detection platform that fuses RGB, thermal, mmWave radar, " +
+      "and temperature data on a Raspberry Pi 5. Senior capstone, team lead.",
     tags: [
       "Embedded Linux",
       "balenaOS",
@@ -67,50 +67,67 @@ export const projects: Project[] = [
       "U-Net",
       "Raspberry Pi",
     ],
-    //image: "/images/projects/frostbyte/frostbyte-hero.jpg",
     image: "/images/projects/frostbyte/FrostbyteDevice.png",
     gallery: [
-      "/images/projects/frostbyte/frostbyte-rig.jpg",
-      "/images/projects/frostbyte/frostbyte-overlay.jpg",
-      "/images/projects/frostbyte/frostbyte-diagnostic.jpg",
-      "/images/projects/frostbyte/frostbyte-dashboard.jpg",
+      "/images/projects/frostbyte/overview.png",
+      "/images/projects/frostbyte/systemOverview.png",
+      "/images/projects/frostbyte/fullSystemDiagram.png",
+      "/images/projects/frostbyte/Enclosure.png",
+      "/images/projects/frostbyte/weatherproofing.png",
+      "/images/projects/frostbyte/softwareArchitectureDevice.png",
+      "/images/projects/frostbyte/softwareArchitectureServer.png",
+      "/images/projects/frostbyte/NotificationServerArchitectureDiagram.png",
+      "/images/projects/frostbyte/modelArchitecture.png",
+      "/images/projects/frostbyte/radarMapping.png",
+      "/images/projects/frostbyte/radarOverlay.jpg",
     ],
     links: [
       { label: "GitHub", href: "https://github.com/HudsonReynolds2/frostbyte" },
     ],
     featured: true,
     year: "2025–26",
-    role: "Team Lead · Sensors & Systems Integration",
+    role: "Team Lead · Sensors, Systems Integration & Testing",
     sections: [
       {
         heading: "Overview",
         body:
-          "FrostByte is a senior capstone project at Boston University targeting a problem that causes hundreds of traffic fatalities every winter: black ice. Unlike visible ice or snow, black ice is nearly transparent on asphalt, giving drivers no warning. Existing road-weather systems are expensive fixed installations — FrostByte is a vehicle-mountable platform designed to detect it from a moving car.\n\n" +
-          "The system fuses four complementary sensors on a single Raspberry Pi 5 running balenaOS: an RGB camera for context, a FLIR Lepton long-wave infrared thermal camera for surface temperature, a TI IWR1843BOOST mmWave radar for surface roughness and reflectivity signatures, and a Pico 2W temperature sensor for ambient ground-truth. A U-Net model consumes the aligned multi-modal feed and produces per-pixel ice segmentation in real time.",
+          "FrostByte is a scalable ice detection platform designed to help two main stakeholders: municipalities and land-managing organizations preventing accidents through targeted ice removal, alongside pedestrians and drivers trying to avoid ice on their route. Each FrostByte device is equipped with a weatherproof, multi-modal sensor array consisting of a visible light camera, thermal infrared camera, millimeter-wave radar, and temperature sensors, enabling comprehensive surface analysis across a wide range of conditions.\n\n" +
+          "FrostByte devices connect over Power over Ethernet to a cloud backend where a management dashboard provides complete sensor control, automated time-of-day configuration scheduling, and a data labeling tool for building ice detection datasets, designed to support many concurrent devices and users. The synchronized multi-modal data is used to train on-device deep learning models, improving detection accuracy at each location. Pedestrians and drivers are served through companion iOS and Android apps delivering proximity and route-based ice alerts with user-defined notification settings.",
+      },
+      {
+        heading: "Forming the Team",
+        body:
+          "I started FrostByte the summer before senior year. I wanted a capstone that tackled a real technical problem in sensing and embedded systems, so I pitched the idea to each of the four other team members individually and recruited based on what they could contribute. I also convinced Professor Sebesta to serve as our client. The concept went through a few iterations, starting with a marine science framing, before we landed on black ice as the target problem.\n\n" +
+          "Over that summer, I bought most of the initial hardware out of pocket so we could start prototyping on day one instead of waiting on procurement. That included the Raspberry Pi 5, Pi 2W, microSD cards, PoE+ switch, ethernet cabling, the RGB Pi Camera, calipers, jumper wires, a multimeter, and a Lambda Concept Lattice FPGA for early radar experiments. By the first week of the semester every sensor had a working API and at least a basic dashboard, which set the pace for the rest of the year.",
       },
       {
         heading: "Architecture",
         body:
-          "The Pi runs balenaOS, which manages the application as a fleet of Docker containers coordinated by supervisord. Each sensor lives in its own container and writes timestamped samples to a Redis in-memory store; a synchronized capture service uses a ThreadPoolExecutor to align frames across the four modalities with sub-frame latency.\n\n" +
-          "A cloud-side dashboard receives live telemetry over WebSocket through a device-client bridge, while bulk data (raw frames, model outputs, metadata) is uploaded to MinIO object storage and PostgreSQL via a dedicated uploader. The whole stack deploys with a single `balena push`, which was important for iterating against field test hardware.",
+          "The Pi runs balenaOS, which manages the application as a set of Docker containers. Every piece of code in the project, from the sensor services on the Pi to the backend and dashboard, was developed in Docker from day one. Balena added a layer of complexity on top of that (pinning architecture digests, working around fleet deployment quirks, keeping local development fast) but the fleet management and rollback guarantees were worth the effort for a multi-device platform.\n\n" +
+          "Each sensor is exposed through a FastAPI capture service that writes timestamped samples to an in-memory Redis store, and a synchronized capture service uses a ThreadPoolExecutor to align frames across all four modalities in under 500 ms. The multithreading matters: because the captures are tightly packed in time, parallel execution is what makes real sensor fusion possible instead of a sequence of loosely related frames. A device client bridges the Pi to the cloud backend over WebSocket, while a separate uploader pushes bulk data (raw frames, model outputs, metadata) to MinIO object storage and PostgreSQL.\n\n" +
+          "The entire cloud stack (FastAPI backend, React dashboard, PostgreSQL, MinIO, and a Cloudflare Tunnel for remote access without a VPN client) runs on my Linux machine, which has served as our production host for the semester. The system was built from the start for concurrent users and long-term operation: the in-memory sample store means sensor traffic never touches the microSD card, the multithreaded capture path keeps end-to-end latency low, and the backend is designed so many operators can manage many devices without contention.\n\n" +
+          "I led the architecture decisions that shaped this stack, and I designed the architecture for the notification system: how device-level detections map to geo-indexed alerts, how proximity and route-based triggers are evaluated on the backend, and how per-user notification settings flow through to the iOS and Android apps.",
       },
       {
         heading: "What I Built",
         body:
-          "I led the software and systems integration side of the project. My work included the synchronized multi-sensor capture pipeline; helped engineer the U-Net fusion model (`frost_finder.py`) that consumes RGB + IR + radar + temperature and produces an ice mask; a configuration system that merges per-schedule capture profiles and model settings into a single JSON schema; a diagnostic overlay with per-sensor agreement coloring; and all of the device-side plumbing for balena deployment.\n\n" +
-          "The integration work was where the real engineering happened. Each sensor had its own failure modes: the FLIR Lepton required firmware work and a custom device-tree overlay for Pi 5 compatibility; the Pico temperature sensor needed a `dtoverlay` fix and `agetty` conflict resolution to stream cleanly over UART; the IWR1843 radar needed GPIO-based reset handling and careful sequencing of its CLI and data ports to survive USB re-enumeration; the IR camera needed libuvc patches. Getting all four to boot reliably from cold, every time, on every deployment, was most of the project.",
+          "My work cut across most of the subsystems, with the sensor layer, system architecture, testing infrastructure, and parts of the model pipeline as the main areas I owned.\n\n" +
+          "On the sensor side, I got every sensor working end-to-end in both cloud and local modes: the FLIR Lepton thermal camera (which needed firmware work and a Pi 5 device-tree overlay), the IWR1843BOOST mmWave radar (GPIO reset handling and careful sequencing of its CLI and data ports to survive USB re-enumeration), the Pico 2W temperature sensor over UART (a dtoverlay fix and agetty conflict resolution to stream cleanly), and the RGB camera with a Flask tuning dashboard for manual focus, exposure, gain, white balance, and resolution. I also set up all of the network infrastructure that ties these together.\n\n" +
+          "On the model side, I built the porthole mask tool that isolates the road surface from surrounding scene, the radar feature threshold gating that filters surface returns by reflectivity and roughness, the temperature gating that applies physical priors based on surface temperature, and large parts of the configuration pipeline that drives both the per-schedule capture profiles and the model parameters from a single JSON schema. These pieces are what let the heuristic and learned detectors actually trust their inputs.\n\n" +
+          "I built the integration test suite that the team relies on. Each test exercises a sensor's full API surface, downloads the resulting frames from Redis, reads their metadata, and reports pass or fail per test based on what the real captures actually contain. The RGB suite alone covers thirteen sections (capture, manual focus at multiple lens positions, exposure and gain sweeps, white balance, resolution steps up to full 12 MP, rotation and flip, camera lifecycle, a stress test with back-to-back captures, and Redis and container health). The IR suite checks that the Lepton reports its real resolution instead of a fallback, validates radiometric temperature statistics, and confirms FFC calibration recovers cleanly. The radar suite covers both TLV and DCA capture modes across a full initialize, capture, and teardown lifecycle.\n\n" +
+          "To make the test loop work without waiting on a real Pi, I built a mock Pi that runs in Docker with mock implementations of every sensor. It exposes the same HTTP and WebSocket surface as the real device, so the same tests run against it unchanged. That meant team members could develop against the full system from their laptops, and we could run the backend test suite in predictable loops against a deterministic device.\n\n" +
+          "Beyond sensors, testing, and the model, I helped CAD the weatherproof prototypes, contributed to the backend dashboard, and acted as the main reviewer on other members' work across subsystems.",
       },
       {
-        heading: "Challenges and Solutions",
+        heading: "Leadership and Learning",
         body:
-          "The biggest systems challenge was making balena deployments reproducible across architectures. Multi-container builds against the Pi 5 (arm64) kept producing warnings about manifest digests; I pinned architecture digests explicitly in the `docker-compose.yml` to get clean, deterministic builds. For local development, I set up a Docker/balena mock environment so the team could iterate on the Pi-side code without waiting for a full push cycle.\n\n" +
-          "On the networking side, the device needs to work in rural field-test conditions. I integrated Tailscale with a graceful-fallback pattern so the device exposes its dashboard over a mesh VPN when available, but never blocks boot if the VPN is unreachable. For resilience, the data uploader queues samples locally when the uplink is down and drains the queue on reconnect.",
+          "Running a five-person capstone meant real project management, not just code. I maintained a Jira board with epics, items, and timelines for each subsystem, built Gantt charts to map dependencies across the semester, and did a lot of the work breakdown that translated our high-level system goals into owned, scoped tasks for each team member. That planning work is often invisible on a finished project, but it was what kept four independent subsystems converging toward a working whole.\n\n" +
+          "The biggest learning curve was the shift from building a prototype to building a product. Deciding which sensor problems were worth solving perfectly and which were worth accepting a rough edge on, when to let a team member own a subsystem versus stepping in to help, and how to sequence integration so the system actually came together instead of converging at the last minute: none of that is taught in a class. The mock Pi and the integration test suite were partly an investment along those lines. Infrastructure that makes the whole team faster is probably the single highest-leverage thing a team lead can build.",
       },
       {
-        heading: "Outcomes",
+        heading: "What's Next",
         body:
-          "FrostByte is in late-stage development, with the full multi-sensor pipeline operational and the U-Net producing ice segmentation against field data. The platform has been demoed to department faculty and industry sponsors, and the team is preparing for spring demo day.\n\n" +
-          "Beyond the capstone, the architecture — containerized sensor modules, in-memory sample bus, cloud telemetry bridge, balena fleet management — is a pattern I've found applies broadly to any edge-sensing workload. I wrote portions of the Installation and User's Manual and contributed to the Final Design Document so the next team (or deployment partner) can pick it up cleanly.",
+          "With the platform operational, the team is planning to continue the work past graduation with a paper write-up of the system and an impact study evaluating FrostByte in real deployments. The goal is to move from a capstone demonstration to a piece of published infrastructure research that other groups can build on.",
       },
     ],
   },
