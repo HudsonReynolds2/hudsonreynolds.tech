@@ -17,7 +17,7 @@ export const site = {
 
   // ── Contact ────────────────────────────────────────────────────────────────
   email: "hudsonre@bu.edu",
-  location: "Boston, MA → San Diego",
+  location: "Boston, MA → San Diego, CA",
 
   // ── Social links (leave any empty "" to hide that icon) ────────────────────
   socials: {
