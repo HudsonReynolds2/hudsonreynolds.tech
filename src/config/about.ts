@@ -6,7 +6,7 @@
 
 export const about = {
   // Hero photo (drop a file at /public/images/about/headshot.jpg)
-  photo: "/images/about/Headshot.jpg",
+  photo: "/images/about/Headshot.JPG",
   photoAlt: "Hudson Reynolds",
 
   // Long-form bio, paragraphs separated by blank lines.
