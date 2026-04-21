@@ -26,17 +26,26 @@ Outside of school and research, I run a home lab (a dual-boot workstation named 
       date: "Expected May 2026",
       location: "Boston, MA",
       details:
-        "Coursework emphasis: high-performance computing (CUDA, OpenMP, SIMD), ",
+        "Coursework emphasis: high-performance computing (CUDA, OpenMP, SIMD), " +
         "distributed systems, computational imaging, robot control, digital logic.",
     },
     {
       institution: "University of Chicago — BigDataX REU",
       degree: "Undergraduate Research",
-      date: "Summer 2024, 2025",
+      date: "Summer 2025",
       location: "Chicago, IL",
       details:
         "Bioacoustic monitoring system research under Mike Sherman (UChicago) and " +
         "Kate Keahey (Argonne National Laboratory). Presented at SC24 and SC25.",
+    },
+    {
+      institution: "University of Sydney",
+      degree: "Study Abroad",
+      date: "Jan-June 2024",
+      location: "Sydney, NSW",
+      details:
+        "Worked at Livelo with CEO Peter Barnes in the Sydney Startup Hub, " +
+        "while studying CE and traveling, surfing, fishing, and practicing photography.",
     },
   ],
 
