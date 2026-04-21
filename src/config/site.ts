@@ -56,7 +56,7 @@ export const site = {
   cta: {
     eyebrow:  "Next Step",
     headline: "Graduating May 2026. Heading to San Diego.",
-    subtext:  "Open to embedded, edge, distributed infrastructure, and anything close to the metal.",
+    subtext:  "Seeking engineering roles at the intersection of software and hardware: embedded systems, edge computing, robotics, or distributed infrastructure.",
   },
 
   // ── Theme: blue + green like the earth ─────────────────────────────────────
