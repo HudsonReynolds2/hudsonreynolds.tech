@@ -486,8 +486,8 @@ export const projects: Project[] = [
   {
     slug: "webblink",
     title: "WebBlink",
-    summary: "Browser-controlled GPIO — blink an LED on a Pi from a web page.",
-    tags: ["Web", "GPIO", "Raspberry Pi"],
+    summary: "Browser-controlled GPIO: blink LEDs with an FPGA through a web dashboard.",
+    tags: ["Web", "GPIO", "FPGA", "ESP32"],
     image: "/images/projects/webBlinkLogo.png",
     links: [{ label: "GitHub", href: "https://github.com/HudsonReynolds2/WebBlink" }],
   },
