@@ -6,7 +6,7 @@
 
 export const about = {
   // Hero photo (drop a file at /public/images/about/headshot.jpg)
-  photo: "/images/about/headshot.jpg",
+  photo: "/images/about/Headshot.jpg",
   photoAlt: "Hudson Reynolds",
 
   // Long-form bio, paragraphs separated by blank lines.
@@ -26,7 +26,7 @@ Outside of school and research, I run a home lab (a dual-boot workstation named 
       date: "Expected May 2026",
       location: "Boston, MA",
       details:
-        "Coursework emphasis: high-performance computing (CUDA, OpenMP, SIMD), " +
+        "Coursework emphasis: high-performance computing (CUDA, OpenMP, SIMD), ",
         "distributed systems, computational imaging, robot control, digital logic.",
     },
     {
@@ -50,13 +50,6 @@ Outside of school and research, I run a home lab (a dual-boot workstation named 
       link: "https://sc25.supercomputing.org/proceedings/posters/poster_pages/post184.html",
     },
     {
-      title: "Bioacoustic Monitoring System (Listener / Aggregator)",
-      venue: "ACM SC24 — BigDataX REU",
-      authors: "Hudson Reynolds et al.",
-      date: "November 2024",
-      link: "",
-    },
-    {
       title: "FlexDC-Sim (co-author)",
       venue: "Submitted to ACM e-Energy 2026",
       authors: "Peaclab, Boston University",
@@ -77,6 +70,7 @@ Outside of school and research, I run a home lab (a dual-boot workstation named 
         "Linux",
         "balenaOS",
         "Docker",
+        "FPGA",
         "Raspberry Pi",
         "ESP32 / ESP-IDF",
         "FreeRTOS",
@@ -89,6 +83,7 @@ Outside of school and research, I run a home lab (a dual-boot workstation named 
       items: [
         "Redis",
         "PostgreSQL",
+        "Hadoop",
         "MinIO / S3",
         "WebSocket",
         "MQTT",
@@ -112,11 +107,17 @@ Outside of school and research, I run a home lab (a dual-boot workstation named 
     {
       group: "Hardware",
       items: [
-        "FLIR Lepton (thermal)",
-        "TI IWR1843BOOST (mmWave)",
-        "AudioMoth",
-        "FPGA (ECPIX-5, LiteX)",
-        "Soldering / Prototyping",
+        "HDL: Verilog, Quartus, Xilinx for FPGA",
+        "Soldering",
+        "Oscilloscope, Power Supplies, Logic Analyzer",
+        "CAD: OnShape, Fusion, Inventor, AutoCAD",
+        "3D Printing",
+        "CNC Machining",
+        "Weatherproof prototypes",
+        "Computer building",
+        "Custom liquid cooling",
+        "Overclocking",
+        "RJ45 Wiring",
       ],
     },
   ],
