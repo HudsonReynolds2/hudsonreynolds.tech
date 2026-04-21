@@ -54,14 +54,16 @@ Outside of school and research, I run a home lab (a dual-boot workstation named 
     {
       title: "Echoes of Earth: Building an Autonomous Environmental Lab for Acoustic Sensing",
       venue: "ACM SC25 Student Research Poster Competition",
+      Lab: "Chameleon Cloud, University of Chicago & Argonne National Laboratory",
       authors: "Hudson Reynolds, Alex Tuecke, Mike Sherman (advisor), Kate Keahey (advisor)",
       date: "November 2025",
       link: "https://sc25.supercomputing.org/proceedings/posters/poster_pages/post184.html",
     },
     {
       title: "FlexDC-Sim (co-author)",
-      venue: "Submitted to ACM e-Energy 2026",
-      authors: "Peaclab, Boston University",
+      venue: "ACM e-Energy 2026",
+      Lab: "Performance and Energy Aware Computing Laboratory (PEACLab), Boston University",
+      authors: "Fatih Acun, Can Hankendi, Ethan Levine, Hudson Reynolds, Joshua Bardwick, Ayse Coskun (Advisor)",
       date: "March 2026",
       link: "https://www.bu.edu/peaclab/files/2026/03/FlexDC_Sim_ACM_E_Energy26.pdf",
     },
@@ -71,7 +73,7 @@ Outside of school and research, I run a home lab (a dual-boot workstation named 
   skills: [
     {
       group: "Languages",
-      items: ["C", "C++", "Python", "MATLAB", "JavaScript/TypeScript", "Verilog", "Bash"],
+      items: ["C", "C++", "Verilog", "Python", "MATLAB", "JavaScript/TypeScript", "Bash"],
     },
     {
       group: "Systems & Embedded",

@@ -67,7 +67,8 @@ export const projects: Project[] = [
       "U-Net",
       "Raspberry Pi",
     ],
-    image: "/images/projects/frostbyte/frostbyte-hero.jpg",
+    //image: "/images/projects/frostbyte/frostbyte-hero.jpg",
+    image: "/images/projects/frostbyte/FrostbyteDevice.png",
     gallery: [
       "/images/projects/frostbyte/frostbyte-rig.jpg",
       "/images/projects/frostbyte/frostbyte-overlay.jpg",
@@ -79,7 +80,7 @@ export const projects: Project[] = [
     ],
     featured: true,
     year: "2025–26",
-    role: "Team Lead · Software & Systems Integration",
+    role: "Team Lead · Sensors & Systems Integration",
     sections: [
       {
         heading: "Overview",
@@ -135,7 +136,8 @@ export const projects: Project[] = [
       "Chameleon Cloud",
       "Edge Computing",
     ],
-    image: "/images/projects/echoes-hero.jpg",
+    //image: "/images/projects/echoes-hero.jpg",
+    image: "/images/projects/echoesofearth/echoesofearthposter.jpg",
     gallery: [
       "/images/projects/echoes-architecture.jpg",
       "/images/projects/echoes-listener.jpg",
@@ -158,6 +160,10 @@ export const projects: Project[] = [
       {
         label: "esp32p4-usb-audiomoth",
         href: "https://github.com/HudsonReynolds2/esp32p4-usb-audiomoth",
+      },
+      {
+        label: "Project Website",
+        href: "https://atuecke.github.io/aggregator-pi-website/",
       },
     ],
     featured: true,
@@ -215,7 +221,8 @@ export const projects: Project[] = [
       "Research",
       "Grid Flexibility",
     ],
-    image: "/images/projects/flexdc-hero.jpg",
+    //image: "/images/projects/flexdc-hero.jpg",
+    image: "/images/projects/flexdc/FlexDCflow.png",
     gallery: [
       "/images/projects/flexdc-architecture.jpg",
       "/images/projects/flexdc-results.jpg",
@@ -366,6 +373,56 @@ export const projects: Project[] = [
       },
     ],
   },
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // 6. EC535 Embedded Systems: Dashmap
+  // ─────────────────────────────────────────────────────────────────────────
+  {
+    slug: "ec535-embedded-systems-dashmap",
+    title: "Dashmap: Robot Dashboard for SLAM",
+    subtitle: "EC535 · SLAM, ESP32 robot, Raspberry Pi, Live Dashboard, Docker",
+    summary:
+      "A semester of computational imaging: Fourier optics, PSFs, deconvolution, " +
+      "and a final project recovering depth from defocused images.",
+    tags: [
+      "Python",
+      "MATLAB",
+      "Fourier Optics",
+      "Deconvolution",
+      "Signal Processing",
+      "Jupyter",
+    ],
+    //image: "/images/projects/ec522-hero.jpg",
+    image: "/images/projects/dashmap/Dashmap.png",
+    gallery: [
+      "/images/projects/dashmap/Dashmap.png",
+      "/images/projects/dashmap/Dashmap_robot.png",
+      "/images/projects/dashmap/Dashmap_slam3r.png",
+    ],
+    links: [],
+    featured: true,
+    year: "2025",
+    role: "Course Project · BU EC535",
+    sections: [
+      {
+        heading: "Overview",
+        body:
+          "EC522 covers the mathematics and algorithms behind computational cameras: how the physical imaging system (lens, aperture, sensor) can be co-designed with the reconstruction algorithm to capture information that traditional cameras simply can't. The course moves through Fourier transforms and convolution, into point-spread function (PSF) modeling, and culminates in deconvolution and depth recovery from optical cues.",
+      },
+      {
+        heading: "Assignments",
+        body:
+          "Homework progressed from Fourier-domain intuition and 1D/2D convolution through PSF analysis, Wiener filtering, and inverse problems. Each assignment pushed the analysis deeper into practical numerical issues — noise amplification in deconvolution, boundary artifacts, conditioning of the forward operator — and most were implemented in both MATLAB and Python/Jupyter to compare environments.",
+      },
+      {
+        heading: "Final Project: Depth from Defocus",
+        body:
+          "The final project was depth-from-defocus: recovering a scene's depth map from two images captured at different focus settings. The algorithm modeled each image as the scene convolved with a depth-dependent PSF, then recovered depth by solving a per-pixel inverse problem that asks which PSF best explains the observed defocus.\n\n" +
+          "The interesting part was the failure modes. Textureless regions have no defocus signal at all (any PSF fits), so the algorithm has to fall back to spatial regularization. High-contrast edges ring under deconvolution. The write-up covered these cases and the design choices that made the reconstruction robust.",
+      },
+    ],
+  },
+
 
   // ─────────────────────────────────────────────────────────────────────────
   // ── Below here: secondary projects (non-featured). They appear on the
