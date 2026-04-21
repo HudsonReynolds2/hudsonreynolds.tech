@@ -14,7 +14,7 @@ export const about = {
 
 Most of my recent work has been in environmental and infrastructure sensing. At UChicago's BigDataX REU (Argonne National Laboratory), I co-developed a solar-powered bioacoustic monitoring system that scales to 25 concurrent recording nodes per aggregator — work that has been presented at SC24 and SC25. For my senior capstone, I lead FrostByte, a multi-sensor black-ice detection platform that fuses RGB, thermal, mmWave radar, and temperature data on a Raspberry Pi 5. On the research side, I've contributed to FlexDC-Sim at BU's Peaclab, a simulator for studying how data centers can provide grid-scale flexibility.
 
-I'm targeting software engineering roles with a C/C++ focus, and I'm especially interested in work that sits close to hardware — embedded systems, edge computing, systems programming, distributed infrastructure. I'm relocating to the Colorado area after graduation.
+I'm targeting software engineering roles with a C/C++ focus, and I'm especially interested in work that sits close to hardware — embedded systems, edge computing, systems programming, distributed infrastructure. I'm relocating to San Diego after graduation.
 
 Outside of school and research, I run a home lab (a dual-boot workstation named "enterprise," a couple of dedicated Linux boxes, and several Raspberry Pis) and host a NeoForge Minecraft server for friends. I like tinkering with the stack all the way down — which, it turns out, is also a good way to figure out where the next layer of a problem lives.`,
 

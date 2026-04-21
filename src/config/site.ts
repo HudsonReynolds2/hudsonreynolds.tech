@@ -22,7 +22,7 @@ export const site = {
   // ── Social links (leave any empty "" to hide that icon) ────────────────────
   socials: {
     github: "https://github.com/HudsonReynolds2",
-    linkedin: "",        // add your LinkedIn URL here
+    linkedin: "https://www.linkedin.com/in/hudson-m-reynolds/",        // add your LinkedIn URL here
     scholar: "",         // Google Scholar if you have one
     resume: "/resume.pdf", // drop your resume PDF at /public/resume.pdf
   },
@@ -50,6 +50,13 @@ export const site = {
     darken:    0.55,
     // Human-readable credit / alt, shown as a small attribution line.
     caption:   "Tarkine Rainforest, Tasmania",
+  },
+
+    // ── Homepage CTA strip ─────────────────────────────────────────────────────
+  cta: {
+    eyebrow:  "Next Step",
+    headline: "Graduating May 2026. Heading to San Diego.",
+    subtext:  "Open to embedded, edge, distributed infrastructure, and anything close to the metal.",
   },
 
   // ── Theme: blue + green like the earth ─────────────────────────────────────

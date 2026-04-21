@@ -68,12 +68,10 @@ import { featuredProjects } from "../config/projects";
   <section class="cta">
     <div class="container cta-inner">
       <div>
-        <div class="eyebrow">Next Step</div>
-        <h2>Graduating May 2026. Looking for C/C++ roles in Colorado.</h2>
-        <p class="muted">
-          Open to embedded, edge, distributed infrastructure, and anything close to the metal.
-        </p>
-      </div>
+        <div class="eyebrow">{site.cta.eyebrow}</div>
+        <h2>{site.cta.headline}</h2>
+        <p class="muted">{site.cta.subtext}</p>
+        </div>
       <div class="cta-actions">
         <a href={`mailto:${site.email}`} class="btn btn-primary">{site.email}</a>
         {site.socials.resume && (
