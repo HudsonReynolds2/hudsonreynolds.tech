@@ -67,12 +67,12 @@ export const projects: Project[] = [
       "U-Net",
       "Raspberry Pi",
     ],
-    image: "/images/projects/frostbyte-hero.jpg",
+    image: "/images/projects/frostbyte/frostbyte-hero.jpg",
     gallery: [
-      "/images/projects/frostbyte-rig.jpg",
-      "/images/projects/frostbyte-overlay.jpg",
-      "/images/projects/frostbyte-diagnostic.jpg",
-      "/images/projects/frostbyte-dashboard.jpg",
+      "/images/projects/frostbyte/frostbyte-rig.jpg",
+      "/images/projects/frostbyte/frostbyte-overlay.jpg",
+      "/images/projects/frostbyte/frostbyte-diagnostic.jpg",
+      "/images/projects/frostbyte/frostbyte-dashboard.jpg",
     ],
     links: [
       { label: "GitHub", href: "https://github.com/HudsonReynolds2/frostbyte" },
@@ -96,7 +96,7 @@ export const projects: Project[] = [
       {
         heading: "What I Built",
         body:
-          "I led the software and systems integration side of the project. My work included the synchronized multi-sensor capture pipeline; the U-Net fusion model (`frost_finder.py`) that consumes RGB + IR + radar + temperature and produces an ice mask; a configuration system that merges per-schedule capture profiles and model settings into a single JSON schema; a diagnostic overlay with per-sensor agreement coloring; and all of the device-side plumbing for balena deployment.\n\n" +
+          "I led the software and systems integration side of the project. My work included the synchronized multi-sensor capture pipeline; helped engineer the U-Net fusion model (`frost_finder.py`) that consumes RGB + IR + radar + temperature and produces an ice mask; a configuration system that merges per-schedule capture profiles and model settings into a single JSON schema; a diagnostic overlay with per-sensor agreement coloring; and all of the device-side plumbing for balena deployment.\n\n" +
           "The integration work was where the real engineering happened. Each sensor had its own failure modes: the FLIR Lepton required firmware work and a custom device-tree overlay for Pi 5 compatibility; the Pico temperature sensor needed a `dtoverlay` fix and `agetty` conflict resolution to stream cleanly over UART; the IWR1843 radar needed GPIO-based reset handling and careful sequencing of its CLI and data ports to survive USB re-enumeration; the IR camera needed libuvc patches. Getting all four to boot reliably from cold, every time, on every deployment, was most of the project.",
       },
       {
