@@ -72,6 +72,7 @@ const bioParagraphs = about.bio.split(/\n\s*\n/);
                 {pub.link ? <a href={pub.link} target="_blank" rel="noopener" class="link">{pub.title}</a> : pub.title}
               </div>
               <div class="muted pub-authors">{pub.authors}</div>
+              {pub.Lab && <div class="pub-lab muted">{pub.Lab}</div>}
               <div class="pub-meta mono">{pub.venue} · {pub.date}</div>
             </li>
           ))}
@@ -214,6 +215,7 @@ const bioParagraphs = about.bio.split(/\n\s*\n/);
     margin-bottom: 0.3rem;
   }
   .pub-authors { font-size: 0.9rem; font-style: italic; }
+  .pub-lab { font-size: 0.85rem; margin-top: 0.2rem; }
   .pub-meta {
     font-size: 0.75rem;
     color: var(--color-text-faint);

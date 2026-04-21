@@ -285,12 +285,10 @@ export const projects: Project[] = [
       "Path Planning",
       "ROS",
     ],
-    image: "/images/projects/me416-hero.jpg",
+    //image: "/images/projects/me416-hero.jpg",
+    image: "/images/projects/ME416/linefollowing_results.png",
     gallery: [
-      "/images/projects/me416-limo.jpg",
-      "/images/projects/me416-mocap.jpg",
-      "/images/projects/me416-maze.jpg",
-      "/images/projects/me416-path.jpg",
+      "/images/projects/ME416/noiseKalman.png",
     ],
     links: [
       { label: "MoCap Visualizer",              href: "https://github.com/HudsonReynolds2/mocap_visualizer" },
@@ -344,11 +342,15 @@ export const projects: Project[] = [
       "Signal Processing",
       "Jupyter",
     ],
-    image: "/images/projects/ec522-hero.jpg",
+    //image: "/images/projects/ec522-hero.jpg",
+    image: "/images/projects/EC522/hw3sunset.png",
     gallery: [
-      "/images/projects/ec522-psf.jpg",
-      "/images/projects/ec522-deconv.jpg",
-      "/images/projects/ec522-depth.jpg",
+      "/images/projects/EC522/psf.png",
+      "/images/projects/EC522/noise.png",
+      "/images/projects/EC522/tikhonov.png",
+      "/images/projects/EC522/LPvsHPfiltering.png",
+      "/images/projects/EC522/depthfromdefocus.png",
+      "/images/projects/EC522/depthfromdefocuserror.png",
     ],
     links: [],
     featured: true,
@@ -358,18 +360,23 @@ export const projects: Project[] = [
       {
         heading: "Overview",
         body:
-          "EC522 covers the mathematics and algorithms behind computational cameras: how the physical imaging system (lens, aperture, sensor) can be co-designed with the reconstruction algorithm to capture information that traditional cameras simply can't. The course moves through Fourier transforms and convolution, into point-spread function (PSF) modeling, and culminates in deconvolution and depth recovery from optical cues.",
+          "EC522 covers the mathematics and algorithms behind computational cameras: how the physical imaging system (lens, aperture, sensor) can be co-designed with the reconstruction" +
+          " algorithm to capture information that traditional cameras simply can't. The course moves through Fourier transforms and convolution, into point-spread function (PSF) modeling," +
+          " and culminates in deconvolution and depth recovery from optical cues.",
       },
       {
         heading: "Assignments",
         body:
-          "Homework progressed from Fourier-domain intuition and 1D/2D convolution through PSF analysis, Wiener filtering, and inverse problems. Each assignment pushed the analysis deeper into practical numerical issues — noise amplification in deconvolution, boundary artifacts, conditioning of the forward operator — and most were implemented in both MATLAB and Python/Jupyter to compare environments.",
+          "Homework progressed from Fourier-domain intuition and 1D/2D convolution through PSF analysis, Wiener filtering, and inverse problems. Each assignment pushed the analysis deeper" + 
+          " into practical numerical issues — noise amplification in deconvolution, boundary artifacts, conditioning of the forward operator — and most were implemented in both MATLAB and Python/Jupyter to compare environments.",
       },
       {
         heading: "Final Project: Depth from Defocus",
         body:
-          "The final project was depth-from-defocus: recovering a scene's depth map from two images captured at different focus settings. The algorithm modeled each image as the scene convolved with a depth-dependent PSF, then recovered depth by solving a per-pixel inverse problem that asks which PSF best explains the observed defocus.\n\n" +
-          "The interesting part was the failure modes. Textureless regions have no defocus signal at all (any PSF fits), so the algorithm has to fall back to spatial regularization. High-contrast edges ring under deconvolution. The write-up covered these cases and the design choices that made the reconstruction robust.",
+          "The final project was depth-from-defocus: recovering a scene's depth map from two images captured at different focus settings. The algorithm modeled each image as the scene" +
+          " convolved with a depth-dependent PSF, then recovered depth by solving a per-pixel inverse problem that asks which PSF best explains the observed defocus.\n\n" +
+          "The interesting part was the failure modes. Textureless regions have no defocus signal at all (any PSF fits), so the algorithm has to fall back to spatial regularization." +
+          " High-contrast edges ring under deconvolution. The write-up covered these cases and the design choices that made the reconstruction robust.",
       },
     ],
   },
@@ -382,15 +389,17 @@ export const projects: Project[] = [
     title: "Dashmap: Robot Dashboard for SLAM",
     subtitle: "EC535 · SLAM, ESP32 robot, Raspberry Pi, Live Dashboard, Docker",
     summary:
-      "A semester of computational imaging: Fourier optics, PSFs, deconvolution, " +
-      "and a final project recovering depth from defocused images.",
+      "A semester of embedded systems: Building a < 10 MB Linux kernel, learning QEMU, " +
+      "and a final project performing live SLAM with a custom ESP32 robot with a live dashboard.",
     tags: [
-      "Python",
-      "MATLAB",
-      "Fourier Optics",
-      "Deconvolution",
-      "Signal Processing",
-      "Jupyter",
+      "C/C++",
+      "Assembly",
+      "Linux",
+      "QEMU",
+      "Makefile",
+      "BusyBox",
+      "CRON",
+      "Compiler Optimization",
     ],
     //image: "/images/projects/ec522-hero.jpg",
     image: "/images/projects/dashmap/Dashmap.png",
@@ -407,18 +416,24 @@ export const projects: Project[] = [
       {
         heading: "Overview",
         body:
-          "EC522 covers the mathematics and algorithms behind computational cameras: how the physical imaging system (lens, aperture, sensor) can be co-designed with the reconstruction algorithm to capture information that traditional cameras simply can't. The course moves through Fourier transforms and convolution, into point-spread function (PSF) modeling, and culminates in deconvolution and depth recovery from optical cues.",
+          "EC535 covers embedded Linux from the ground up: how a minimal system is built, configured, and deployed on real hardware. The course works through cross-compilation toolchains, building" +
+          " a sub-10 MB Linux kernel with custom configuration, BusyBox for a minimal userspace, and QEMU for emulation and testing. Topics also include init systems, CRON scheduling, and compiler" +
+          " optimization strategies relevant to resource-constrained targets, and more.",
       },
       {
         heading: "Assignments",
         body:
-          "Homework progressed from Fourier-domain intuition and 1D/2D convolution through PSF analysis, Wiener filtering, and inverse problems. Each assignment pushed the analysis deeper into practical numerical issues — noise amplification in deconvolution, boundary artifacts, conditioning of the forward operator — and most were implemented in both MATLAB and Python/Jupyter to compare environments.",
+          "Labs progressed from setting up a cross-compilation environment and booting a minimal kernel in QEMU through increasingly complex system configuration: trimming the kernel to under 10 MB," +
+          " assembling a BusyBox-based rootfs, writing init scripts, and tuning compiler flags for size and performance. Each lab built directly on the last, reinforcing how each layer of the embedded" +
+          " Linux stack depends on the one below it.",
       },
       {
-        heading: "Final Project: Depth from Defocus",
+        heading: "Final Project: Live SLAM with a Custom ESP32 Robot",
         body:
-          "The final project was depth-from-defocus: recovering a scene's depth map from two images captured at different focus settings. The algorithm modeled each image as the scene convolved with a depth-dependent PSF, then recovered depth by solving a per-pixel inverse problem that asks which PSF best explains the observed defocus.\n\n" +
-          "The interesting part was the failure modes. Textureless regions have no defocus signal at all (any PSF fits), so the algorithm has to fall back to spatial regularization. High-contrast edges ring under deconvolution. The write-up covered these cases and the design choices that made the reconstruction robust.",
+          "The final project was a fully autonomous robot built around an ESP32, performing live SLAM and streaming state to a real-time web dashboard. The robot handled sensor streaming and" +
+          " motor control onboard while the dashboard visualized the evolving map and robot pose live, and a GPU rig performed the actual SLAM algorithm.\n\n" +
+          "The interesting part was the integration surface. Getting SLAM to run reliably across multiple machines and someimtes firewalls meant careful caching and timing discipline, and the live dashboard added" +
+          " a networking and serialization layer on top. The write-up covered the architecture decisions that kept latency low and the system stable across a full mapping run.",
       },
     ],
   },
@@ -437,7 +452,7 @@ export const projects: Project[] = [
     summary:
       "A working CPU designed from digital logic fundamentals for BU's EC311 course.",
     tags: ["Verilog", "Digital Logic", "CPU Design", "FPGA"],
-    image: "/images/projects/ec311-hero.jpg",
+    image: "/images/projects/EC311Logo.png",
     links: [
       { label: "GitHub", href: "https://github.com/HudsonReynolds2/Digital-Logic-2602" },
     ],
@@ -451,7 +466,7 @@ export const projects: Project[] = [
     summary:
       "Low-level SPI driver work for ESP32 platforms — infrastructure that underpins the Listener node.",
     tags: ["C", "ESP32", "SPI", "Embedded"],
-    image: "/images/projects/esp-idf-spi-hero.jpg",
+    image: "/images/projects/ESP-IDF-SPILogo.png",
     links: [
       { label: "esp-idf-spi", href: "https://github.com/HudsonReynolds2/esp-idf-spi" },
       { label: "SPI",         href: "https://github.com/HudsonReynolds2/SPI" },
@@ -464,7 +479,7 @@ export const projects: Project[] = [
     title: "Pi Power Monitor",
     summary: "A Raspberry Pi utility for monitoring system power draw.",
     tags: ["Python", "Raspberry Pi", "Monitoring"],
-    image: "/images/projects/pi-power-hero.jpg",
+    image: "/images/projects/PiPowerLogo.png",
     links: [{ label: "GitHub", href: "https://github.com/HudsonReynolds2/pi_power_monitor" }],
   },
 
@@ -473,7 +488,7 @@ export const projects: Project[] = [
     title: "WebBlink",
     summary: "Browser-controlled GPIO — blink an LED on a Pi from a web page.",
     tags: ["Web", "GPIO", "Raspberry Pi"],
-    image: "/images/projects/webblink-hero.jpg",
+    image: "/images/projects/webBlinkLogo.png",
     links: [{ label: "GitHub", href: "https://github.com/HudsonReynolds2/WebBlink" }],
   },
 
@@ -482,7 +497,7 @@ export const projects: Project[] = [
     title: "Spotify Custom Player",
     summary: "A custom Spotify player UI built against the Web Playback SDK.",
     tags: ["JavaScript", "Web", "Spotify API"],
-    image: "/images/projects/spotify-hero.jpg",
+    image: "/images/projects/SpotifyCustomPlayerLogo.png",
     links: [{ label: "GitHub", href: "https://github.com/HudsonReynolds2/spotify-custom-player" }],
   },
 
@@ -491,7 +506,7 @@ export const projects: Project[] = [
     title: "ESP32 BLE Data Streaming",
     summary: "Streaming sensor data over Bluetooth Low Energy from an ESP32.",
     tags: ["C", "ESP32", "BLE", "Embedded"],
-    image: "/images/projects/esp32-ble-hero.jpg",
+    image: "/images/projects/espbleLogo.png",
     links: [{ label: "GitHub", href: "https://github.com/HudsonReynolds2/esp32-BLE-for-data-streaming" }],
   },
 
@@ -499,9 +514,9 @@ export const projects: Project[] = [
     slug: "sleep-tracker-ek210",
     title: "Sleep Tracking Wearable",
     subtitle: "EK210 Engineering Design",
-    summary: "A wearable sleep-tracking device built for BU's EK210 intro design course.",
+    summary: "A wearable sleep-tracking device built for BU's EK210 intro design course. Inexpensive, easy to build, secure, and comfortable.",
     tags: ["Embedded", "Wearable", "Sensors"],
-    image: "/images/projects/sleep-tracker-hero.jpg",
+    image: "/images/projects/sleepTrackinglogo.png",
     links: [{ label: "GitHub", href: "https://github.com/HudsonReynolds2/Sleep-Tracking-Wearable-Device-EK210" }],
     year: "2023",
   },
@@ -509,18 +524,18 @@ export const projects: Project[] = [
   {
     slug: "id-finder",
     title: "ID Finder",
-    summary: "A utility for locating and cross-referencing IDs across datasets.",
+    summary: "A system for lost & found ID cards. Anrdoid app and backend database. Easily customizable, secure, scalable.",
     tags: ["Python", "Tooling"],
-    image: "/images/projects/id-finder-hero.jpg",
+    image: "/images/projects/idFinderLogo.png",
     links: [{ label: "GitHub", href: "https://github.com/HudsonReynolds2/ID-Finder" }],
   },
 
   {
     slug: "shulker-box-finder",
     title: "Shulker Box Finder",
-    summary: "A tool for the SeniorSurvival NeoForge Minecraft server.",
+    summary: "Ever lost a shulker box somewhere in a minecraft world? This tool inspects the save folder and finds it for you!",
     tags: ["Java", "Minecraft", "Modding"],
-    image: "/images/projects/shulker-hero.jpg",
+    image: "/images/projects/shulkerboxfinderlogo.png",
     links: [{ label: "GitHub", href: "https://github.com/HudsonReynolds2/shulker_box_finder" }],
   },
 ];
