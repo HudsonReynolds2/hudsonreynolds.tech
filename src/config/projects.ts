@@ -453,6 +453,66 @@ export const projects: Project[] = [
           " a networking and serialization layer on top. The write-up covered the architecture decisions that kept latency low and the system stable across a full mapping run.",
       },
     ],
+    
+  },
+{
+    slug: "ec527-hpc-gpu",
+    title: "HPC & GPU Programming",
+    subtitle: "EC527 · HPC, CUDA, Optix, SIMD",
+    summary:
+      "A semester of high-performance programming labs, from SIMD and AVX2 Vector Processing to CUDA, " +
+      "and a final project accelerating the smallpt raytracing demo using RTX cores and the Optix API.",
+    tags: [
+      "C/C++",
+      "CUDA",
+      "HPC",
+      "SIMD",
+      "Raytracing",
+      "GPU",
+    ],
+    //image: "/images/projects/ec522-hero.jpg",
+    image: "/images/projects/EC527/4096x3072_4096spp.png",
+    gallery: [
+      "/images/projects/EC527/comparison_small.jpg",
+    ],
+    links: [],
+    featured: true,
+    year: "2026",
+    role: "Course Project · BU EC527",
+    sections: [
+      {
+        heading: "Overview",
+        body:
+          "EC527 is BU's high-performance computing course, covering the full stack of CPU and GPU optimization techniques. " +
+          "Labs move from low-level CPU intrinsics through parallel programming models and into GPU architecture, with a structured " +
+          "progression that builds intuition for where performance actually comes from on modern hardware. " +
+          "The semester culminates in an open-ended final project targeting real GPU acceleration on a non-trivial workload.",
+      },
+      {
+        heading: "Labs",
+        body:
+          "Lab work covered SIMD and AVX2 vector intrinsics for data-parallel CPU code, loop unrolling and cache-aware memory " +
+          "access patterns, and an introduction to CUDA — kernels, thread/block hierarchy, shared memory, and occupancy tuning. " +
+          "Later labs moved into more advanced GPU topics including memory coalescing, warp-level primitives, and profiling with " +
+          "Nsight Compute to identify real bottlenecks rather than guessing.",
+      },
+      {
+        heading: "Final Project: smallpt on RTX",
+        body:
+          "The final project took smallpt — the classic 99-line path tracer — and accelerated it using NVIDIA's OptiX 8 API on " +
+          "a modern RTX GPU. The work was structured as a three-phase benchmark:\n\n" +
+          "Phase 1 ported the renderer to a baseline CUDA kernel, replacing the CPU Monte Carlo loop with a massively parallel " +
+          "per-pixel dispatch but keeping all intersection math in software on the shader cores.\n\n" +
+          "Phase 2 integrated the OptiX pipeline — ray generation, closest-hit, miss, and any-hit shaders wired through an " +
+          "acceleration structure — so that BVH traversal and ray-triangle intersection moved onto the RT cores. Walls became " +
+          "triangle geometry and the three scene spheres used OptiX's built-in sphere primitive type, giving them hardware-accelerated " +
+          "BVH traversal but still routing their intersection math through a software shader.\n\n" +
+          "Phase 3 tessellated the spheres into triangle meshes, putting every primitive on the full RT-core path (hardware traversal " +
+          "and hardware triangle intersection). This also required fixing floating-point precision artifacts — the original large wall " +
+          "quads caused z-fighting between the ceiling geometry and the area light — addressed through wall tessellation. " +
+          "The three-phase structure gives clean, apples-to-apples timing comparisons: software CUDA vs. partial RTX vs. fully RTX-accelerated.",
+      },
+    ],
   },
 
 
