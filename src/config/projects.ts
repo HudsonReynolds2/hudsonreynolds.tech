@@ -133,7 +133,7 @@ export const projects: Project[] = [
   },
 
   // ─────────────────────────────────────────────────────────────────────────
-  // 2. ECHOES OF EARTH — SC24 / SC25 research (Aggregator-Pi + Listener)
+  // 2. ECHOES OF EARTH — SC25 research (Aggregator-Pi + Listener)
   // ─────────────────────────────────────────────────────────────────────────
   {
     slug: "echoes-of-earth",
@@ -141,7 +141,7 @@ export const projects: Project[] = [
     subtitle: "Autonomous Environmental Lab for Acoustic Sensing",
     summary:
       "A solar-powered, WiFi-HaLow-networked bioacoustic sensing system that " +
-      "sustains 25 concurrent recording nodes per aggregator. Presented at SC24 and SC25.",
+      "sustains 25 concurrent recording nodes per aggregator. Presented at SC25.",
     tags: [
       "Distributed Systems",
       "ESP32-S3",
@@ -184,14 +184,14 @@ export const projects: Project[] = [
       },
     ],
     featured: true,
-    year: "2024–25",
+    year: "2025",
     role: "Co-lead · REU at UChicago BigDataX / Argonne",
     sections: [
       {
         heading: "Overview",
         body:
           "Real-time bioacoustic monitoring is a powerful tool for biodiversity conservation, but the industry-standard recording devices cost $600–$1,000+, require manual data retrieval, and offer no live status. Deployments don't scale, and malfunctioning devices can lose months of data before anyone notices.\n\n" +
-          "Echoes of Earth is an end-to-end system I co-developed with Alex Tuecke under advisors Mike Sherman (UChicago) and Kate Keahey (Argonne National Laboratory) during the BigDataX REU. We built two devices — Listener (a solar-powered edge recorder) and Aggregator (a Raspberry Pi 5 collection and inference node) — and a cloud pipeline on Chameleon. The system was presented as a poster at SC24 and SC25.",
+          "Echoes of Earth is an end-to-end system I co-developed with Alex Tuecke under advisors Mike Sherman (UChicago) and Kate Keahey (Argonne National Laboratory) during the BigDataX REU. We built two devices — Listener (a solar-powered edge recorder) and Aggregator (a Raspberry Pi 5 collection and inference node) — and a cloud pipeline on Chameleon. The system was presented as a poster at SC25.",
       },
       {
         heading: "Listener",
@@ -215,7 +215,7 @@ export const projects: Project[] = [
         heading: "My Role",
         body:
           "I was co-first-author on the SC25 poster and split the work with Alex Tuecke. On the Listener side, I wrote the WAV streaming firmware (`wav-streamer`), the ESP32-P4 USB-AudioMoth integration (`esp32p4-usb-audiomoth`), the SPI infrastructure for the HaLow radio, and the ring-buffer architecture that keeps audio flowing through PSRAM under back-pressure.\n\n" +
-          "On the research side, I helped design the evaluation methodology, ran the scalability tests, and co-authored the 800-word ACM summary. This was my second SC appearance — I also presented earlier iterations of the Listener / Aggregator architecture at SC24.",
+          "On the research side, I helped design the evaluation methodology, ran the scalability tests, and co-authored the poster writup mini-paper."
       },
     ],
   },
@@ -475,7 +475,7 @@ export const projects: Project[] = [
     gallery: [
       "/images/projects/EC527/comparison_small.jpg",
     ],
-    links: [],
+    links: [{ label: "smallpt-optix", href: "https://github.com/HudsonReynolds2/smallpt-optix" },],
     featured: true,
     year: "2026",
     role: "Course Project · BU EC527",
